@@ -1,0 +1,10 @@
+# Dataset files
+data/*.csv
+
+# Python environment
+.venv/
+venv/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+data/creditcard.csv
