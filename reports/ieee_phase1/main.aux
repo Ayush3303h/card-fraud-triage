@@ -1,0 +1,57 @@
+\relax 
+\citation{chandola2009}
+\citation{dempster1977}
+\citation{akaike1974}
+\citation{schwarz1978}
+\citation{he2009}
+\citation{ulb_dataset}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}Dataset and Exploratory Analysis}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Dataset}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Data quality and class imbalance}{1}{}\protected@file@percent }
+\citation{dempster1977}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Class distribution after exact-duplicate removal.}}{2}{}\protected@file@percent }
+\newlabel{fig:classdist}{{1}{2}{}{figure.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Chronological data partition after duplicate removal}}{2}{}\protected@file@percent }
+\newlabel{tab:split}{{I}{2}{}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Preprocessing and Experimental Protocol}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Chronological partitioning}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Feature processing}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Training strategy}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces AIC and BIC across the tested GMM component counts ($K=1$--$40$).}}{2}{}\protected@file@percent }
+\newlabel{fig:aicbic}{{2}{2}{}{figure.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Gaussian Mixture Model}{2}{}\protected@file@percent }
+\newlabel{eq:gmm}{{2}{2}{}{equation.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Component selection}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Repeated-initialization comparison}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Legitimate validation log-likelihood across the tested component counts. The best single-run value occurs at $K=36$.}}{3}{}\protected@file@percent }
+\newlabel{fig:vll}{{3}{3}{}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Anomaly scoring and threshold selection}{3}{}\protected@file@percent }
+\newlabel{eq:score}{{5}{3}{}{equation.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Experimental Results}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Implementation}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Test performance}{3}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Final GMM test performance at the validation-selected threshold}}{3}{}\protected@file@percent }
+\newlabel{tab:metrics}{{II}{3}{}{table.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Confusion matrix for the final GMM on the test partition}}{3}{}\protected@file@percent }
+\newlabel{tab:cm}{{III}{3}{}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Fixed false-positive-rate operation}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Limited review capacity}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Discussion}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Limitations and Threats to Validity}{3}{}\protected@file@percent }
+\bibcite{chandola2009}{1}
+\bibcite{dempster1977}{2}
+\bibcite{akaike1974}{3}
+\bibcite{schwarz1978}{4}
+\bibcite{he2009}{5}
+\bibcite{ulb_dataset}{6}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Fraud triage performance at fixed test review capacities}}{4}{}\protected@file@percent }
+\newlabel{tab:topk}{{V}{4}{}{table.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Precision-recall curve for the final $K=38$ GMM on the test partition. Average Precision is 0.2719.}}{4}{}\protected@file@percent }
+\newlabel{fig:pr}{{4}{4}{}{figure.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Final GMM performance at validation-calibrated false-positive-rate targets}}{4}{}\protected@file@percent }
+\newlabel{tab:fpr}{{IV}{4}{}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IX}Conclusion and Future Work}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{4}{}\protected@file@percent }
+\gdef \@abspage@last{4}
