@@ -8,3 +8,11 @@ venv/
 # Jupyter checkpoints
 .ipynb_checkpoints/
 data/creditcard.csv
+.DS_Store
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Generated model files
+artifacts/*.joblib

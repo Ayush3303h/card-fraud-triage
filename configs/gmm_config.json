@@ -1,0 +1,16 @@
+
+{
+  "data_path": "data/creditcard.csv",
+  "train_ratio": 0.70,
+  "validation_ratio": 0.15,
+  "model": {
+    "n_components": 38,
+    "covariance_type": "diag",
+    "max_iter": 200,
+    "n_init": 3,
+    "reg_covar": 0.00001,
+    "random_state": 42
+  },
+  "fpr_targets": [0.01, 0.005, 0.001],
+  "review_capacities": [50, 100, 200]
+}
