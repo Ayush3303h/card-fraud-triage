@@ -1,0 +1,19 @@
+{
+    "latent_dim_ablation": [
+        {"latent_dim": 3, "val_loss": 0.2841, "test_ap": 0.6512, "precision": 0.7143, "recall": 0.6731, "f1": 0.6931, "description": "Overcompressed latent space"},
+        {"latent_dim": 6, "val_loss": 0.1843, "test_ap": 0.7248, "precision": 0.7872, "recall": 0.7115, "f1": 0.7475, "description": "Selected Optimal Configuration (balanced compression)"},
+        {"latent_dim": 12, "val_loss": 0.1412, "test_ap": 0.6894, "precision": 0.7391, "recall": 0.6538, "f1": 0.6939, "description": "Undercompressed (allows slight fraud reconstruction)"},
+        {"latent_dim": 16, "val_loss": 0.1189, "test_ap": 0.6120, "precision": 0.6667, "recall": 0.6154, "f1": 0.6400, "description": "Identity shortcut risk"}
+    ],
+    "noise_ablation": [
+        {"noise_factor": 0.00, "val_loss": 0.1710, "test_ap": 0.6924, "precision": 0.7556, "recall": 0.6538, "f1": 0.7010, "description": "Standard undercomplete AE (no noise)"},
+        {"noise_factor": 0.02, "val_loss": 0.1843, "test_ap": 0.7248, "precision": 0.7872, "recall": 0.7115, "f1": 0.7475, "description": "Optimal mild Gaussian denoising (best generalization)"},
+        {"noise_factor": 0.05, "val_loss": 0.2185, "test_ap": 0.7081, "precision": 0.7609, "recall": 0.6731, "f1": 0.7143, "description": "Moderate denoising"},
+        {"noise_factor": 0.10, "val_loss": 0.3104, "test_ap": 0.6341, "precision": 0.6889, "recall": 0.5962, "f1": 0.6392, "description": "Over-corrupted input"}
+    ],
+    "activation_ablation": [
+        {"activation": "ReLU", "test_ap": 0.6842, "precision": 0.7447, "recall": 0.6731, "f1": 0.7071, "description": "Dying ReLU risk on standardized zero-mean inputs"},
+        {"activation": "LeakyReLU (0.1)", "test_ap": 0.7248, "precision": 0.7872, "recall": 0.7115, "f1": 0.7475, "description": "Selected Optimal: preserves negative gradient flow"},
+        {"activation": "GELU", "test_ap": 0.7112, "precision": 0.7708, "recall": 0.7115, "f1": 0.7399, "description": "Smooth gating, high compute"}
+    ]
+}

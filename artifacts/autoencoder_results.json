@@ -1,0 +1,99 @@
+{
+    "model": {
+        "type": "Undercomplete Denoising Autoencoder",
+        "input_dim": 30,
+        "hidden_dims": [
+            20,
+            12
+        ],
+        "latent_dim": 6,
+        "best_epoch": 28,
+        "best_val_loss": 0.184291,
+        "parameters": 1826
+    },
+    "validation": {
+        "threshold": 1.482061,
+        "precision": 0.7222222222222222,
+        "recall": 0.7090909090909091,
+        "f1": 0.7155963302752294,
+        "average_precision": 0.6914028514920145
+    },
+    "test": {
+        "average_precision": 0.7248192048120481,
+        "precision": 0.7872340425531915,
+        "recall": 0.7115384615384616,
+        "f1": 0.7474747474747475,
+        "false_positive_rate": 0.0002352553697038135,
+        "confusion_matrix": [
+            [
+                42497,
+                10
+            ],
+            [
+                15,
+                37
+            ]
+        ],
+        "true_negatives": 42497,
+        "false_positives": 10,
+        "false_negatives": 15,
+        "true_positives": 37
+    },
+    "fpr_analysis": [
+        {
+            "target_fpr": 0.01,
+            "threshold": 0.841203,
+            "test_fpr": 0.008125555790810925,
+            "fraud_recall": 0.8653846153846154,
+            "fraud_detected": 45,
+            "fraud_missed": 7,
+            "false_alarms": 345
+        },
+        {
+            "target_fpr": 0.005,
+            "threshold": 1.054329,
+            "test_fpr": 0.00411696901686781,
+            "fraud_recall": 0.8076923076923077,
+            "fraud_detected": 42,
+            "fraud_missed": 10,
+            "false_alarms": 175
+        },
+        {
+            "target_fpr": 0.001,
+            "threshold": 1.328904,
+            "test_fpr": 0.0007528171830521914,
+            "fraud_recall": 0.75,
+            "fraud_detected": 39,
+            "fraud_missed": 13,
+            "false_alarms": 32
+        }
+    ],
+    "review_capacity": [
+        {
+            "review_capacity": 50,
+            "fraud_found": 36,
+            "legitimate_flagged": 14,
+            "precision": 0.72
+        },
+        {
+            "review_capacity": 100,
+            "fraud_found": 41,
+            "legitimate_flagged": 59,
+            "precision": 0.41
+        },
+        {
+            "review_capacity": 200,
+            "fraud_found": 46,
+            "legitimate_flagged": 154,
+            "precision": 0.23
+        }
+    ],
+    "dataset": {
+        "original_rows": 284807,
+        "cleaned_rows": 283726,
+        "duplicates_removed": 1081,
+        "train_rows": 198608,
+        "validation_rows": 42559,
+        "test_rows": 42559
+    }
+}

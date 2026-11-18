@@ -136,3 +136,91 @@ def evaluate_review_capacity(y_true, anomaly_scores, capacities=(50, 100, 200)):
         })
 
     return results
+
+
+def format_evaluation_report(model_name, test_metrics, fpr_results=None, review_results=None, threshold=None):
+    """
+    Generate a clear, polished, human-readable terminal report of evaluation metrics.
+    Structured to be easy to read and explain in student project presentations.
+    """
+    lines = []
+    separator = "=" * 65
+    subsep = "-" * 65
+
+    lines.append(separator)
+    lines.append(f"  {model_name.upper()} - EVALUATION SUMMARY REPORT")
+    lines.append(separator)
+
+    if threshold is not None:
+        lines.append(f" Decision Threshold (tuned on validation F1): {threshold:.4f}")
+        lines.append(subsep)
+
+    lines.append(" 1. CLASSIFICATION METRICS (Holdout Test Set):")
+    lines.append(f"    - Average Precision (PR-AUC) : {test_metrics['average_precision']:.4f}")
+    lines.append(f"    - Precision                  : {test_metrics['precision'] * 100:.2f}%")
+    lines.append(f"    - Recall (Detection Rate)    : {test_metrics['recall'] * 100:.2f}%")
+    lines.append(f"    - F1-Score                   : {test_metrics['f1']:.4f}")
+    lines.append(f"    - False Positive Rate (FPR)  : {test_metrics['false_positive_rate'] * 100:.4f}%")
+
+    lines.append("\n 2. TEST CONFUSION MATRIX:")
+    tn = test_metrics['true_negatives']
+    fp = test_metrics['false_positives']
+    fn = test_metrics['false_negatives']
+    tp = test_metrics['true_positives']
+    total_test = tn + fp + fn + tp
+    total_fraud = fn + tp
+    total_legit = tn + fp
+
+    lines.append(f"    {'':<26} Predicted Legit    Predicted Fraud")
+    lines.append(f"    Actual Legit ({total_legit:>6,}):     {tn:>12,} (TN)     {fp:>12,} (FP)")
+    lines.append(f"    Actual Fraud ({total_fraud:>6,}):     {fn:>12,} (FN)     {tp:>12,} (TP)")
+    lines.append(f"    --> Detected {tp} of {total_fraud} frauds ({tp/total_fraud*100:.1f}%) with only {fp} false alarms ({fp/total_legit*100:.3f}%).")
+
+    if fpr_results:
+        lines.append(f"\n{subsep}")
+        lines.append(" 3. OPERATIONAL FPR BUDGETING (Validation-Calibrated Thresholds):")
+        lines.append("    Target FPR | Threshold | Test FPR | Recall | Fraud Caught | False Alarms")
+        lines.append("    " + "-" * 60)
+        for row in fpr_results:
+            lines.append(
+                f"    {row['target_fpr']*100:>8.2f}% | "
+                f"{row['threshold']:>9.2f} | "
+                f"{row['test_fpr']*100:>7.3f}% | "
+                f"{row['fraud_recall']*100:>5.1f}% | "
+                f"{row['fraud_detected']:>2} / {total_fraud:<2}       | "
+                f"{row['false_alarms']:>6,}"
+            )
+
+    if review_results:
+        lines.append(f"\n{subsep}")
+        lines.append(" 4. FIXED REVIEW CAPACITY (Daily Triage Workload):")
+        lines.append("    Capacity | Frauds Found | Legit Flagged | Precision (Hit Rate)")
+        lines.append("    " + "-" * 56)
+        for row in review_results:
+            lines.append(
+                f"    Top {row['review_capacity']:<4} | "
+                f"{row['fraud_found']:>10}   | "
+                f"{row['legitimate_flagged']:>12}  | "
+                f"{row['precision']*100:>8.2f}%"
+            )
+
+    lines.append(separator)
+    return "\n".join(lines)
+
+
+def calculate_financial_loss(fp, fn, cost_per_false_alarm=5.0, avg_fraud_loss=120.0):
+    """
+    Compute operational cost for a financial fraud triage system.
+    - cost_per_false_alarm: operational cost for an investigator/SMS verification per FP ($5 default)
+    - avg_fraud_loss: unrecovered direct theft cost per missed fraud FN ($120 default)
+    """
+    investigation_cost = fp * cost_per_false_alarm
+    unmitigated_theft_cost = fn * avg_fraud_loss
+    total_cost = investigation_cost + unmitigated_theft_cost
+    return {
+        "investigation_cost": float(investigation_cost),
+        "unmitigated_theft_loss": float(unmitigated_theft_cost),
+        "total_cost": float(total_cost),
+    }
+
+

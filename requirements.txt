@@ -6,3 +6,4 @@ seaborn
 jupyter
 ipykernel
 joblib
+torch>=2.0.0

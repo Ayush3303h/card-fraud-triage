@@ -16,3 +16,4 @@ __pycache__/
 
 # Generated model files
 artifacts/*.joblib
+artifacts/*.pt

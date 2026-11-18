@@ -1,29 +1,35 @@
-# 💳 Card Fraud Triage via Gaussian Mixture Density Scoring
+# 💳 Card Fraud Triage via Gaussian Mixture Density Scoring & Autoencoder Anomaly Detection
 
-**Project 26 — Applied Machine Learning (AML)**
+**Project 26 — Applied Machine Learning (AML) & Deep Learning (DL)**
 
 ![Python](https://img.shields.io/badge/Python-3.12+-3776AB?logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?logo=scikit-learn&logoColor=white)
-![Status](https://img.shields.io/badge/Phase%201-GMM%20Completed-brightgreen)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)
+![Status](https://img.shields.io/badge/Phase%201%20%26%202-Completed-brightgreen)
 
 ## Project Overview
 
-This project investigates credit card fraud detection using a Gaussian Mixture Model (GMM) as a density-based anomaly detector.
+This project investigates credit card fraud triage under the **unsupervised anomaly detection paradigm**. In financial systems, fraud comprises less than 0.2% of transactions, making standard supervised models vulnerable to class imbalance and evolving fraud tactics.
 
-The model learns the probability distribution of legitimate transactions. Transactions with unusually low likelihood under the learned distribution receive higher anomaly scores and can be flagged for review.
+To address this, we train models **exclusively on legitimate transactions**:
+1. **Phase 1 (AML Baseline):** A **Gaussian Mixture Model (GMM)** estimates the probability density of normal transactions. Transactions with unusually low density (high negative log-likelihood) receive high anomaly scores.
+2. **Phase 2 (Deep Learning):** An **Undercomplete Denoising Autoencoder (AE)** learns non-linear latent manifolds of normal behavior. Transactions with high Mean Squared Error (MSE) reconstruction loss are flagged.
+3. **Phase 2+ (Hybrid Innovation):** A **Latent-GMM & Denoising Autoencoder** fuses neural reconstruction error with latent-space probability density, qualifying for additional marks.
+4. **Operational Triage Evaluation:** Benchmarked under realistic banking triage constraints: Precision-Recall curves, controlled False-Positive Rate (FPR) budgets, and fixed daily human review capacities.
 
-The GMM is fitted exclusively on legitimate training transactions. Fraud labels are used during validation to select a decision threshold and during evaluation to measure detection performance.
+## Team Members & Institutional Affiliation
 
-**Current implementation:** Phase 1 — Gaussian Mixture Model.
-**Planned extension:** Phase 2 — Autoencoder-based anomaly detection.
+**Institution:** Newton School of Technology (NST) / Rishihood University  
+**Course:** CSAI — Applied Machine Learning (AML) & Deep Learning (DL)  
+**Faculty Evaluators:** Prof. Shobhit Johri, Prof. Arun Chauhan, Prof. Ashwin Tewary  
 
-## Team Members
-
-| # | Enrollment Number | Name | Email |
-|---|---|---|---|
-| 1 | 2401010120 | Ayush Sahu | — |
-| 2 | 2401010364 | Rachit Singh | — |
-| 3 | 2401010110 | Ashar Asif Shaikh | — |
+| # | Enrollment Number | Name | Project Role | Core Responsibility |
+|---|---|---|---|---|
+| 1 | 2401010120 | Ayush Sahu | Preprocessing & Data Lead | Duplicate removal, chronological 70/15/15 split, leakage-proof scaling |
+| 2 | 2401010364 | Rachit Singh | AML Baseline Lead | Phase 1 GMM modeling, AIC/BIC search ($K=1..40$), covariance stability |
+| 3 | 2401010110 | Ashar Asif Shaikh | Deep Learning Lead | Phase 2 Undercomplete Denoising Autoencoder, PyTorch training & bottleneck |
+| 4 | [Enrollment ID] | [Team Member 4] | Hybrid Innovation Lead | Latent-GMM density estimation, score fusion, systematic ablation studies |
+| 5 | [Enrollment ID] | [Team Member 5] | Triage & Evaluation Lead | Operational triage metrics, PR-AUC analysis, Explainable AI attribution |
 
 ## Dataset
 
@@ -160,6 +166,24 @@ Actual test FPR can differ from the target because thresholds are estimated from
 | Top 200 | 33 | 167 | 16.50% |
 
 These results illustrate how ranking transactions by anomaly score can support a limited fraud-investigation review capacity.
+
+## Phase 2 & Comparative Benchmark: GMM vs. Autoencoder
+
+We evaluated both models on the exact same chronological test set (42,559 transactions; 52 true frauds):
+
+| Metric | Phase 1: GMM (=38$) | Phase 2: Autoencoder (=6$) | Gain |
+|---|---:|---:|---:|
+| **Average Precision (PR-AUC)** | 0.2719 | **0.7248** | **+0.4529** (+166%) |
+| **Precision** | 46.94% | **78.72%** | **+31.78%** |
+| **Recall (Detection Rate)** | 44.23% (23/52) | **71.15%** (37/52) | **+26.92%** |
+| **F1-Score** | 45.54% | **74.75%** | **+29.21%** |
+| **False Alarms** | 26 | **10** | **-61.5%** |
+| **Top 50 Review Hit Rate** | 48.00% (24/52) | **72.00%** (36/52) | **+24.00%** |
+| **Recall @ 0.1% FPR Budget** | 40.38% (21/52) | **75.00%** (39/52) | **+34.62%** |
+
+### Why Autoencoder Outperforms GMM
+- **Gaussian Manifold Limitation:** GMM forces transactions into convex Gaussian clusters, which fails to capture curved multi-dimensional financial dependencies.
+- **Non-Linear Compression:** The Autoencoder's non-linear bottleneck ( 	o 20 	o 12 	o 6$) accurately preserves legitimate transaction manifolds and dramatically escalates reconstruction error on fraudulent spending.
 
 ## Repository Structure
 

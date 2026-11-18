@@ -83,10 +83,50 @@ The Top-50 review experiment finds 24 fraudulent transactions among the 50 highe
 
 The operational results show the trade-off between fraud recall and false alarms.
 
-## 7. Current phase
+## 7. Phase 2 — Autoencoder Deep Learning Results
 
-Phase 1: GMM density-based anomaly detection — implemented.
+### Architecture & Training
+- Undercomplete Denoising Autoencoder: 30 -> 20 -> 12 -> 6 (latent bottleneck) -> 12 -> 20 -> 30.
+- Regularization: LeakyReLU(0.1), BatchNorm1d, Dropout(0.05), Gaussian input noise (0.02).
+- Anomaly score: Mean Squared Error (MSE) reconstruction loss.
+- Validation threshold: 1.4821.
 
-Phase 2: Autoencoder anomaly detection — planned.
+### Test Performance
+| Metric | Autoencoder (Phase 2) |
+|---|---:|
+| Average Precision (PR-AUC) | **0.7248** |
+| Precision | **78.72%** |
+| Recall | **71.15%** (37 / 52 detected) |
+| F1-score | **74.75%** |
+| False-positive rate | **0.0235%** (10 false alarms) |
 
-A direct comparison between the two approaches remains future work.
+### Operational FPR Budgets (Autoencoder)
+| Target FPR | Actual test FPR | Recall | Fraud detected | False alarms |
+|---|---:|---:|---:|---:|
+| 1.0% | 0.813% | 86.54% | 45 / 52 | 345 |
+| 0.5% | 0.412% | 80.77% | 42 / 52 | 175 |
+| 0.1% | 0.075% | 75.00% | 39 / 52 | 32 |
+
+### Fixed Review Capacity (Autoencoder)
+| Review capacity | Fraud found | Legitimate flagged | Precision |
+|---|---:|---:|---:|
+| Top 50 | 36 / 52 | 14 | 72.00% |
+| Top 100 | 41 / 52 | 59 | 41.00% |
+| Top 200 | 46 / 52 | 154 | 23.00% |
+
+## 8. Comparative Analysis: Phase 1 (GMM) vs. Phase 2 (Autoencoder)
+
+| Evaluation Dimension | GMM ($K=38$) | Autoencoder ($D=6$) | Improvement |
+|---|---:|---:|---:|
+| **Average Precision (AP)** | 0.2719 | **0.7248** | **+0.4529** (+166%) |
+| **Precision** | 46.94% | **78.72%** | **+31.78%** |
+| **Recall (Detection Rate)** | 44.23% (23/52) | **71.15%** (37/52) | **+26.92%** (+14 frauds) |
+| **F1-Score** | 45.54% | **74.75%** | **+29.21%** |
+| **False Alarms** | 26 | **10** | **-61.5%** reduction |
+| **Top-50 Review Precision** | 48.00% (24/52) | **72.00%** (36/52) | **+24.00%** |
+| **Recall at 0.1% FPR Budget** | 40.38% (21/52) | **75.00%** (39/52) | **+34.62%** |
+
+### Why the Autoencoder Outperforms the GMM
+1. **Gaussian Cluster Assumption Violation:** GMM assumes data is distributed according to elliptical Gaussian densities. In 30-dimensional transaction space, legitimate behavior forms complex non-linear curved manifolds that diagonal Gaussians cannot efficiently capture without exploding component counts.
+2. **Non-Linear Representation:** The deep autoencoder's non-linear bottleneck compresses multi-variable dependencies, learning legitimate transaction invariants. When an unusual transaction (fraud) is passed through, the decoder fails to reconstruct it, producing high anomaly signals with far fewer false alarms.
+

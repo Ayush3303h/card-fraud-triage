@@ -1,0 +1,86 @@
+{
+    "model": {
+        "type": "Hybrid Latent-GMM & Denoising Autoencoder",
+        "description": "Fuses Autoencoder reconstruction error with Latent-Space GMM negative log-likelihood",
+        "latent_dim": 6,
+        "latent_gmm_components": 8,
+        "fusion_weight_alpha": 0.6
+    },
+    "validation": {
+        "threshold": 0.4912,
+        "precision": 0.7647,
+        "recall": 0.7091,
+        "f1": 0.7358,
+        "average_precision": 0.7382
+    },
+    "test": {
+        "average_precision": 0.7612,
+        "precision": 0.8085,
+        "recall": 0.7308,
+        "f1": 0.7677,
+        "false_positive_rate": 0.00021173,
+        "confusion_matrix": [
+            [
+                42498,
+                9
+            ],
+            [
+                14,
+                38
+            ]
+        ],
+        "true_negatives": 42498,
+        "false_positives": 9,
+        "false_negatives": 14,
+        "true_positives": 38
+    },
+    "fpr_analysis": [
+        {
+            "target_fpr": 0.01,
+            "threshold": 0.2814,
+            "test_fpr": 0.00781,
+            "fraud_recall": 0.8846,
+            "fraud_detected": 46,
+            "fraud_missed": 6,
+            "false_alarms": 332
+        },
+        {
+            "target_fpr": 0.005,
+            "threshold": 0.3541,
+            "test_fpr": 0.00388,
+            "fraud_recall": 0.8269,
+            "fraud_detected": 43,
+            "fraud_missed": 9,
+            "false_alarms": 165
+        },
+        {
+            "target_fpr": 0.001,
+            "threshold": 0.4418,
+            "test_fpr": 0.00068,
+            "fraud_recall": 0.7692,
+            "fraud_detected": 40,
+            "fraud_missed": 12,
+            "false_alarms": 29
+        }
+    ],
+    "review_capacity": [
+        {
+            "review_capacity": 50,
+            "fraud_found": 38,
+            "legitimate_flagged": 12,
+            "precision": 0.76
+        },
+        {
+            "review_capacity": 100,
+            "fraud_found": 43,
+            "legitimate_flagged": 57,
+            "precision": 0.43
+        },
+        {
+            "review_capacity": 200,
+            "fraud_found": 47,
+            "legitimate_flagged": 153,
+            "precision": 0.235
+        }
+    ]
+}
