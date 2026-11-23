@@ -128,7 +128,7 @@ where $\tau$ is selected by maximizing F1-score on the validation partition. The
 
 \section{Experimental Results}
 \subsection{Implementation}
-The model is optimized with AdamW (learning rate $10^{-3}$, weight decay $10^{-5}$), mini-batch size 512, and at most 60 epochs. Training stops early when the validation loss does not improve for 10 consecutive epochs. The selected checkpoint was reached at epoch 28 with a validation loss of 0.1843. The input-noise level is $\sigma=0.02$ and the dropout rate is 0.05.
+The model is optimized with AdamW (learning rate $10^{-3}$, weight decay $10^{-5}$), mini-batch size 256, and at most 50 epochs, with a plateau scheduler that halves the learning rate after 3 epochs without validation improvement. Training stops early when the validation loss does not improve for 8 consecutive epochs, and the best weights are restored. The selected checkpoint was reached at epoch 28 with a validation loss of 0.1843. The random seed is 42. The input-noise level is $\sigma=0.02$ and the dropout rate is 0.05.
 
 \subsection{Test performance}
 The test partition contains 42,559 transactions, including 52 fraudulent transactions. At the validation-selected threshold, the autoencoder obtains the metrics in Table~\ref{tab:metrics}, alongside the Phase~1 GMM at its own validation-selected threshold. The confusion matrix is shown in Table~\ref{tab:cm}. Average Precision is reported as the summary of the precision-recall curve; the curves for both models are provided in Fig.~\ref{fig:pr}.
